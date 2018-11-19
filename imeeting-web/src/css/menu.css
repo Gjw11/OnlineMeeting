@@ -1,0 +1,16 @@
+.foodImg{
+    width: 64px;
+    height: 64px;
+}
+.menu_search{
+    width: 164px;
+    float: left;
+}
+.menu_button{
+    width: 164px;
+    float: left;
+}
+.menu_Tabs{
+    width: 100%;
+    float: left;
+}
