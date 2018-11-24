@@ -1,7 +1,10 @@
 package com.IMeeting.controller;
 
+import com.IMeeting.entity.Depart;
+import com.IMeeting.entity.Position;
 import com.IMeeting.entity.ServerResult;
 import com.IMeeting.entity.Userinfo;
+import com.IMeeting.resposirity.DepartRepository;
 import com.IMeeting.resposirity.UserinfoRepository;
 import com.IMeeting.service.UserinfoService;
 import com.IMeeting.util.MD5;
@@ -9,6 +12,7 @@ import com.IMeeting.util.Message;
 import com.IMeeting.util.Random;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
+import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -31,29 +35,20 @@ public class UserinfoController {
     private UserinfoService userinfoService;
     @Autowired
     private UserinfoRepository userinfoRepository;
-    @Autowired
-    private RedisTemplate redisTemplate;
 
     //登陆
     @RequestMapping("/login")
-    public ServerResult login(@RequestParam("username") String username, @RequestParam("password") String password,HttpServletRequest request) {
+    public ServerResult login(@RequestParam("username") String username,@RequestParam("password") String password,HttpServletRequest request) {
         ServerResult serverResult = new ServerResult();
-        String token = "testdemo11111111111119";
-        Map userInfo = new HashMap();
-        userInfo.put("number", "1");
-        userInfo.put("account", "2");
-        userInfo.put("username", "李四");
-        userInfo.put("clientip", "4");
-        //将管理员信息保存到 redis：管理员编号、管理员账号、管理员客户端ip
-        redisTemplate.opsForHash().putAll(token,userInfo);
-
-        System.out.println("success");
         Userinfo u = userinfoService.login(username, password);
         if (u != null) {
             serverResult.setData(u);
+            serverResult.setStatus(true);
             HttpSession session=request.getSession();
             session.setAttribute("user_id",u.getId());
             session.setAttribute("tenant_id",u.getTenant_id());
+            session.setAttribute("depart_id",u.getDepart_id());
+            session.setAttribute("position_id",u.getPosition_id());
         } else {
             serverResult.setMessage("账号密码错误");
         }
@@ -78,6 +73,7 @@ public class UserinfoController {
             System.out.println("RequestId=" + response.getRequestId());
             System.out.println("BizId=" + response.getBizId());
             serverResult.setData(randomNum);
+            serverResult.setStatus(true);
         }
         return serverResult;
     }
@@ -111,7 +107,8 @@ public class UserinfoController {
     }
     //短信验证绑定手机号
     @RequestMapping("/recordPhone")
-    public ServerResult recordPhone(@RequestParam("id") Integer id,@RequestParam("phone") String phone)  {
+    public ServerResult recordPhone(@RequestParam("phone") String phone,HttpServletRequest request)  {
+        Integer id=(Integer)request.getSession().getAttribute("user_id");
         ServerResult serverResult = new ServerResult();
         int bol=userinfoRepository.updatePhone(phone, id);
         if (bol!=0)
@@ -133,11 +130,45 @@ public class UserinfoController {
         else if(u!=null){
             String newPwd=md5.MD5(newPassword);
             int bol=userinfoRepository.changePwd(newPwd,id);
-            if(u!=null)
+            if(u!=null) {
                 serverResult.setMessage("密码修改成功");
-            else
+                serverResult.setStatus(true);
+            }
+            else {
                 serverResult.setMessage("密码修改失败");
+            }
         }
+        return serverResult;
+    }
+    //查询显示个人信息
+    @RequestMapping("/showUserinfo")
+    public ServerResult showUserinfo(HttpServletRequest request) {
+        ServerResult serverResult = new ServerResult();
+        Map userinfo=new HashMap<>();
+        Integer depart_id=(Integer) request.getSession().getAttribute("depart_id");
+        Depart depart=userinfoService.getDepart(depart_id);
+        String depart_name=depart.getName();
+        Integer position_id=(Integer) request.getSession().getAttribute("position_id");
+        Position position=userinfoService.getPosition(position_id);
+        String position_name=position.getName();
+        Integer user_id=(Integer) request.getSession().getAttribute("user_id");
+        Userinfo u=userinfoService.getUserinfo(user_id);
+        userinfo.put("name",u.getName());
+        userinfo.put("worknum",u.getWorknum());
+        userinfo.put("phone",u.getPhone());
+        userinfo.put("resume",u.getResume());
+        userinfo.put("depart_name",depart_name);
+        userinfo.put("position_name",position_name);
+        serverResult.setData(userinfo);
+        return serverResult;
+    }
+    @RequestMapping("updateResume")
+    public ServerResult showUserinfo(@RequestParam ("resume")String resume, HttpServletRequest request) {
+        ServerResult serverResult=new ServerResult();
+        Integer user_id=(Integer)request.getSession().getAttribute("user_id");
+        int u=userinfoRepository.updateResume(resume,user_id);
+        if (u!=0)
+            serverResult.setStatus(true);
         return serverResult;
     }
 }
