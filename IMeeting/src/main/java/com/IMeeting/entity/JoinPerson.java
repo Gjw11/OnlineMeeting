@@ -14,8 +14,8 @@ public class JoinPerson {
     @Id
     @GeneratedValue
     private Integer id;
-    private Integer meeting_id;
-    private Integer user_id;
+    private Integer meetingId;
+    private Integer userId;
 
     public Integer getId() {
         return id;
@@ -25,19 +25,19 @@ public class JoinPerson {
         this.id = id;
     }
 
-    public Integer getMeeting_id() {
-        return meeting_id;
+    public Integer getMeetingId() {
+        return meetingId;
     }
 
-    public void setMeeting_id(Integer meeting_id) {
-        this.meeting_id = meeting_id;
+    public void setMeetingId(Integer meetingId) {
+        this.meetingId = meetingId;
     }
 
-    public Integer getUser_id() {
-        return user_id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

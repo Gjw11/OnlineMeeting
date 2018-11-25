@@ -18,10 +18,10 @@ public class Meeting {
     private String content;
     private String begin;
     private String over;
-    private Integer user_id;
-    private Integer meetroom_id;
+    private Integer userId;
+    private Integer meetroomId;
     private Integer satus;
-    private Integer tenant_id;
+    private Integer tenantId;
 
     public Integer getId() {
         return id;
@@ -63,20 +63,28 @@ public class Meeting {
         this.over = over;
     }
 
-    public Integer getUser_id() {
-        return user_id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public Integer getMeetroom_id() {
-        return meetroom_id;
+    public Integer getMeetroomId() {
+        return meetroomId;
     }
 
-    public void setMeetroom_id(Integer meetroom_id) {
-        this.meetroom_id = meetroom_id;
+    public void setMeetroomId(Integer meetroomId) {
+        this.meetroomId = meetroomId;
+    }
+
+    public Integer getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(Integer tenantId) {
+        this.tenantId = tenantId;
     }
 
     public Integer getSatus() {
@@ -87,11 +95,4 @@ public class Meeting {
         this.satus = satus;
     }
 
-    public Integer getTenant_id() {
-        return tenant_id;
-    }
-
-    public void setTenant_id(Integer tenant_id) {
-        this.tenant_id = tenant_id;
-    }
 }

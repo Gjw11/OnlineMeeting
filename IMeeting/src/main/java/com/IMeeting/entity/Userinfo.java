@@ -20,9 +20,9 @@ public class Userinfo  {
     private String phone;
     private String username;
     private String password;
-    private Integer depart_id;
-    private Integer position_id;
-    private Integer tenant_id;
+    private Integer departId;
+    private Integer positionId;
+    private Integer tenantId;
     private Integer status;
     private String resume;
 
@@ -74,28 +74,28 @@ public class Userinfo  {
         this.password = password;
     }
 
-    public Integer getDepart_id() {
-        return depart_id;
+    public Integer getDepartId() {
+        return departId;
     }
 
-    public void setDepart_id(Integer depart_id) {
-        this.depart_id = depart_id;
+    public void setDepartId(Integer departId) {
+        this.departId = departId;
     }
 
-    public Integer getPosition_id() {
-        return position_id;
+    public Integer getPositionId() {
+        return positionId;
     }
 
-    public void setPosition_id(Integer position_id) {
-        this.position_id = position_id;
+    public void setPositionId(Integer positionId) {
+        this.positionId = positionId;
     }
 
-    public Integer getTenant_id() {
-        return tenant_id;
+    public Integer getTenantId() {
+        return tenantId;
     }
 
-    public void setTenant_id(Integer tenant_id) {
-        this.tenant_id = tenant_id;
+    public void setTenantId(Integer tenantId) {
+        this.tenantId = tenantId;
     }
 
     public Integer getStatus() {

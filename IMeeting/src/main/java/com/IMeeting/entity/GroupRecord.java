@@ -1,9 +1,6 @@
 package com.IMeeting.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by gjw on 2018/11/18.
@@ -12,10 +9,10 @@ import javax.persistence.Table;
 @Table(name = "u_group_record")
 public class GroupRecord {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer group_id;
-    private Integer user_id;
+    private Integer groupId;
+    private Integer userId;
 
     public Integer getId() {
         return id;
@@ -25,19 +22,19 @@ public class GroupRecord {
         this.id = id;
     }
 
-    public Integer getGroup_id() {
-        return group_id;
+    public Integer getGroupId() {
+        return groupId;
     }
 
-    public void setGroup_id(Integer group_id) {
-        this.group_id = group_id;
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
     }
 
-    public Integer getUser_id() {
-        return user_id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

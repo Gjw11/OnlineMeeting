@@ -14,8 +14,8 @@ public class MeetroomEquip {
     @Id
     @GeneratedValue
     private Integer id;
-    private Integer meetroom_id;
-    private Integer equip_id;
+    private Integer meetroomId;
+    private Integer equipId;
 
     public Integer getId() {
         return id;
@@ -25,19 +25,19 @@ public class MeetroomEquip {
         this.id = id;
     }
 
-    public Integer getMeetroom_id() {
-        return meetroom_id;
+    public Integer getMeetroomId() {
+        return meetroomId;
     }
 
-    public void setMeetroom_id(Integer meetroom_id) {
-        this.meetroom_id = meetroom_id;
+    public void setMeetroomId(Integer meetroomId) {
+        this.meetroomId = meetroomId;
     }
 
-    public Integer getEquip_id() {
-        return equip_id;
+    public Integer getEquipId() {
+        return equipId;
     }
 
-    public void setEquip_id(Integer equip_id) {
-        this.equip_id = equip_id;
+    public void setEquipId(Integer equipId) {
+        this.equipId = equipId;
     }
 }

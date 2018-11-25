@@ -16,10 +16,10 @@ public class MeetroomParameter {
     private Integer id;
     private String beigin;
     private String over;
-    private String date_limit;
-    private String time_limit;
-    private String time_interval;
-    private Integer tenant_id;
+    private String dateLimit;
+    private String timeLimit;
+    private String timeInterval;
+    private Integer tenantId;
 
     public Integer getId() {
         return id;
@@ -45,35 +45,35 @@ public class MeetroomParameter {
         this.over = over;
     }
 
-    public String getDate_limit() {
-        return date_limit;
+    public String getDateLimit() {
+        return dateLimit;
     }
 
-    public void setDate_limit(String date_limit) {
-        this.date_limit = date_limit;
+    public void setDateLimit(String dateLimit) {
+        this.dateLimit = dateLimit;
     }
 
-    public String getTime_limit() {
-        return time_limit;
+    public String getTimeLimit() {
+        return timeLimit;
     }
 
-    public void setTime_limit(String time_limit) {
-        this.time_limit = time_limit;
+    public void setTimeLimit(String timeLimit) {
+        this.timeLimit = timeLimit;
     }
 
-    public String getTime_interval() {
-        return time_interval;
+    public String getTimeInterval() {
+        return timeInterval;
     }
 
-    public void setTime_interval(String time_interval) {
-        this.time_interval = time_interval;
+    public void setTimeInterval(String timeInterval) {
+        this.timeInterval = timeInterval;
     }
 
-    public Integer getTenant_id() {
-        return tenant_id;
+    public Integer getTenantId() {
+        return tenantId;
     }
 
-    public void setTenant_id(Integer tenant_id) {
-        this.tenant_id = tenant_id;
+    public void setTenantId(Integer tenantId) {
+        this.tenantId = tenantId;
     }
 }

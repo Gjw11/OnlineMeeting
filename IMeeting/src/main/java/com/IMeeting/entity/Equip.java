@@ -15,7 +15,7 @@ public class Equip {
     @GeneratedValue
     private Integer id;
     private String name;
-    private Integer tenant_id;
+    private Integer tenantId;
 
     public Integer getId() {
         return id;
@@ -33,11 +33,11 @@ public class Equip {
         this.name = name;
     }
 
-    public Integer getTenant_id() {
-        return tenant_id;
+    public Integer getTenantId() {
+        return tenantId;
     }
 
-    public void setTenant_id(Integer tenant_id) {
-        this.tenant_id = tenant_id;
+    public void setTenantId(Integer tenantId) {
+        this.tenantId = tenantId;
     }
 }

@@ -45,10 +45,10 @@ public class UserinfoController {
             serverResult.setData(u);
             serverResult.setStatus(true);
             HttpSession session=request.getSession();
-            session.setAttribute("user_id",u.getId());
-            session.setAttribute("tenant_id",u.getTenant_id());
-            session.setAttribute("depart_id",u.getDepart_id());
-            session.setAttribute("position_id",u.getPosition_id());
+            session.setAttribute("userId",u.getId());
+            session.setAttribute("tenantId",u.getTenantId());
+            session.setAttribute("departId",u.getDepartId());
+            session.setAttribute("positionId",u.getPositionId());
         } else {
             serverResult.setMessage("账号密码错误");
         }
@@ -103,12 +103,13 @@ public class UserinfoController {
         System.out.println("RequestId=" + response.getRequestId());
         System.out.println("BizId=" + response.getBizId());
         serverResult.setData(randomNum);
+        serverResult.setStatus(true);
         return serverResult;
     }
     //短信验证绑定手机号
     @RequestMapping("/recordPhone")
     public ServerResult recordPhone(@RequestParam("phone") String phone,HttpServletRequest request)  {
-        Integer id=(Integer)request.getSession().getAttribute("user_id");
+        Integer id=(Integer)request.getSession().getAttribute("userId");
         ServerResult serverResult = new ServerResult();
         int bol=userinfoRepository.updatePhone(phone, id);
         if (bol!=0)
@@ -122,7 +123,7 @@ public class UserinfoController {
         MD5 md5=new MD5();
         String oldPwd=md5.MD5(oldPassword);
         HttpSession session=request.getSession();
-        Integer id= (Integer) session.getAttribute("user_id");
+        Integer id= (Integer) session.getAttribute("userId");
         Userinfo u = userinfoRepository.findByIdAndPassword(id,oldPwd);
         if(u==null){
             serverResult.setMessage("旧密码不正确");
@@ -145,28 +146,28 @@ public class UserinfoController {
     public ServerResult showUserinfo(HttpServletRequest request) {
         ServerResult serverResult = new ServerResult();
         Map userinfo=new HashMap<>();
-        Integer depart_id=(Integer) request.getSession().getAttribute("depart_id");
-        Depart depart=userinfoService.getDepart(depart_id);
-        String depart_name=depart.getName();
-        Integer position_id=(Integer) request.getSession().getAttribute("position_id");
-        Position position=userinfoService.getPosition(position_id);
-        String position_name=position.getName();
-        Integer user_id=(Integer) request.getSession().getAttribute("user_id");
-        Userinfo u=userinfoService.getUserinfo(user_id);
+        Integer departId=(Integer) request.getSession().getAttribute("departId");
+        Depart depart=userinfoService.getDepart(departId);
+        String departName=depart.getName();
+        Integer positionId=(Integer) request.getSession().getAttribute("positionId");
+        Position position=userinfoService.getPosition(positionId);
+        String positionName=position.getName();
+        Integer userId=(Integer) request.getSession().getAttribute("userId");
+        Userinfo u=userinfoService.getUserinfo(userId);
         userinfo.put("name",u.getName());
         userinfo.put("worknum",u.getWorknum());
         userinfo.put("phone",u.getPhone());
         userinfo.put("resume",u.getResume());
-        userinfo.put("depart_name",depart_name);
-        userinfo.put("position_name",position_name);
+        userinfo.put("departName",departName);
+        userinfo.put("positionName",positionName);
         serverResult.setData(userinfo);
         return serverResult;
     }
     @RequestMapping("updateResume")
     public ServerResult showUserinfo(@RequestParam ("resume")String resume, HttpServletRequest request) {
+        Integer userId=(Integer)request.getSession().getAttribute("userId");
+        int u=userinfoRepository.updateResume(resume,userId);
         ServerResult serverResult=new ServerResult();
-        Integer user_id=(Integer)request.getSession().getAttribute("user_id");
-        int u=userinfoRepository.updateResume(resume,user_id);
         if (u!=0)
             serverResult.setStatus(true);
         return serverResult;

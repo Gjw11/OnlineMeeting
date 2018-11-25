@@ -15,8 +15,8 @@ public class Position {
     @GeneratedValue
     private Integer id;
     private String name;
-    private Integer tenant_id;
-    private Integer depart_id;
+    private Integer tenantId;
+    private Integer departId;
 
     public Integer getId() {
         return id;
@@ -34,19 +34,19 @@ public class Position {
         this.name = name;
     }
 
-    public Integer getTenant_id() {
-        return tenant_id;
+    public Integer getTenantId() {
+        return tenantId;
     }
 
-    public void setTenant_id(Integer tenant_id) {
-        this.tenant_id = tenant_id;
+    public void setTenantId(Integer tenantId) {
+        this.tenantId = tenantId;
     }
 
-    public Integer getDepart_id() {
-        return depart_id;
+    public Integer getDepartId() {
+        return departId;
     }
 
-    public void setDepart_id(Integer depart_id) {
-        this.depart_id = depart_id;
+    public void setDepartId(Integer departId) {
+        this.departId = departId;
     }
 }

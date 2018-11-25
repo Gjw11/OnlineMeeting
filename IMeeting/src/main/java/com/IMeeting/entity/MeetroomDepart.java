@@ -14,8 +14,8 @@ public class MeetroomDepart {
     @Id
     @GeneratedValue
     private Integer id;
-    private Integer meetroom_id;
-    private Integer depart_id;
+    private Integer meetroomId;
+    private Integer departId;
     private Integer satus;
 
     public Integer getId() {
@@ -26,20 +26,20 @@ public class MeetroomDepart {
         this.id = id;
     }
 
-    public Integer getMeetroom_id() {
-        return meetroom_id;
+    public Integer getMeetroomId() {
+        return meetroomId;
     }
 
-    public void setMeetroom_id(Integer meetroom_id) {
-        this.meetroom_id = meetroom_id;
+    public void setMeetroomId(Integer meetroomId) {
+        this.meetroomId = meetroomId;
     }
 
-    public Integer getDepart_id() {
-        return depart_id;
+    public Integer getDepartId() {
+        return departId;
     }
 
-    public void setDepart_id(Integer depart_id) {
-        this.depart_id = depart_id;
+    public void setDepartId(Integer departId) {
+        this.departId = departId;
     }
 
     public Integer getSatus() {

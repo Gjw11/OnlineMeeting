@@ -14,8 +14,8 @@ public class MeetroomPosition {
     @Id
     @GeneratedValue
     private Integer id;
-    private Integer meetroom_id;
-    private Integer position_id;
+    private Integer meetroomId;
+    private Integer positionId;
     private Integer satus;
 
     public Integer getId() {
@@ -26,20 +26,20 @@ public class MeetroomPosition {
         this.id = id;
     }
 
-    public Integer getMeetroom_id() {
-        return meetroom_id;
+    public Integer getMeetroomId() {
+        return meetroomId;
     }
 
-    public void setMeetroom_id(Integer meetroom_id) {
-        this.meetroom_id = meetroom_id;
+    public void setMeetroomId(Integer meetroomId) {
+        this.meetroomId = meetroomId;
     }
 
-    public Integer getPosition_id() {
-        return position_id;
+    public Integer getPositionId() {
+        return positionId;
     }
 
-    public void setPosition_id(Integer position_id) {
-        this.position_id = position_id;
+    public void setPositionId(Integer positionId) {
+        this.positionId = positionId;
     }
 
     public Integer getSatus() {

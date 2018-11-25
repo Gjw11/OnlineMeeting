@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -19,6 +20,7 @@ public interface UserinfoRepository extends JpaRepository<Userinfo,Integer>{
     Userinfo findByUsernameAndPassword(String username,String password);
     Userinfo findByPhoneAndPassword(String phone,String password);
     Userinfo findByPhone(String phone);
+    List<Userinfo> findByDepartId(Integer departId);
     Optional<Userinfo> findById(Integer id);
     @Transactional
     @Modifying

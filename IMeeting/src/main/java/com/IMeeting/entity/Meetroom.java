@@ -18,9 +18,9 @@ public class Meetroom {
     private String num;
     private String place;
     private Integer contain;
-    private Integer avail_status;
-    private Integer now_status;
-    private Integer tenant_id;
+    private Integer availStatus;
+    private Integer nowStatus;
+    private Integer tenantId;
 
     public Integer getId() {
         return id;
@@ -62,27 +62,27 @@ public class Meetroom {
         this.contain = contain;
     }
 
-    public Integer getAvail_status() {
-        return avail_status;
+    public Integer getAvailStatus() {
+        return availStatus;
     }
 
-    public void setAvail_status(Integer avail_status) {
-        this.avail_status = avail_status;
+    public void setAvailStatus(Integer availStatus) {
+        this.availStatus = availStatus;
     }
 
-    public Integer getNow_status() {
-        return now_status;
+    public Integer getNowStatus() {
+        return nowStatus;
     }
 
-    public void setNow_status(Integer now_status) {
-        this.now_status = now_status;
+    public void setNowStatus(Integer nowStatus) {
+        this.nowStatus = nowStatus;
     }
 
-    public Integer getTenant_id() {
-        return tenant_id;
+    public Integer getTenantId() {
+        return tenantId;
     }
 
-    public void setTenant_id(Integer tenant_id) {
-        this.tenant_id = tenant_id;
+    public void setTenantId(Integer tenantId) {
+        this.tenantId = tenantId;
     }
 }
