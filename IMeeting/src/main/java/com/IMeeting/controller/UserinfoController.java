@@ -29,7 +29,7 @@ import java.util.Map;
  * Created by gjw on 2018/11/19.
  */
 @RestController
-@CrossOrigin(allowCredentials = "true")
+@CrossOrigin
 public class UserinfoController {
     @Autowired
     private UserinfoService userinfoService;
@@ -163,7 +163,8 @@ public class UserinfoController {
         serverResult.setData(userinfo);
         return serverResult;
     }
-    @RequestMapping("updateResume")
+    //更新个人简介
+    @RequestMapping("/updateResume")
     public ServerResult showUserinfo(@RequestParam ("resume")String resume, HttpServletRequest request) {
         Integer userId=(Integer)request.getSession().getAttribute("userId");
         int u=userinfoRepository.updateResume(resume,userId);
@@ -172,4 +173,13 @@ public class UserinfoController {
             serverResult.setStatus(true);
         return serverResult;
     }
+    //退出
+    @RequestMapping("/logout")
+    public ServerResult logout(HttpServletRequest request) {
+        request.getSession().invalidate();
+        ServerResult serverResult=new ServerResult();
+        serverResult.setStatus(true);
+        return serverResult;
+    }
+
 }
