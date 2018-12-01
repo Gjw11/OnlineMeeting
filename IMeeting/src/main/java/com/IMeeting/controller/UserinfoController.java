@@ -154,6 +154,9 @@ public class UserinfoController {
         String positionName=position.getName();
         Integer userId=(Integer) request.getSession().getAttribute("userId");
         Userinfo u=userinfoService.getUserinfo(userId);
+        System.out.println(departId);
+        System.out.println(positionId);
+        System.out.println(userId);
         userinfo.put("name",u.getName());
         userinfo.put("worknum",u.getWorknum());
         userinfo.put("phone",u.getPhone());
@@ -161,6 +164,20 @@ public class UserinfoController {
         userinfo.put("departName",departName);
         userinfo.put("positionName",positionName);
         serverResult.setData(userinfo);
+        return serverResult;
+    }
+    //判断是否已经登陆
+    @RequestMapping("/hadLog")
+    public ServerResult hadLog(HttpServletRequest request) {
+        ServerResult serverResult = new ServerResult();
+        Integer userId=(Integer) request.getSession().getAttribute("userId");
+        System.out.println(userId);
+        System.out.println(String.valueOf(userId));
+        if(userId==null){
+            serverResult.setStatus(false);
+        }else{
+            serverResult.setStatus(true);
+        }
         return serverResult;
     }
     //更新个人简介
