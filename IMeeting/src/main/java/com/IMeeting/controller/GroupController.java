@@ -41,15 +41,15 @@ public class GroupController {
         ServerResult serverResult=new ServerResult();
         Integer tenantId= (Integer) request.getSession().getAttribute("tenantId");
         List<Depart>departs=departRepository.findByTenantId(tenantId);
-        Map<Integer,List<Userinfo>> userinfoMap=new HashMap<>();
         List<Object>result=new ArrayList<>();
+        List<Object>resultUser=new ArrayList<>();
         for(int i=0;i<departs.size();i++){
             Integer departId=departs.get(i).getId();
-            List<Userinfo> userinfos=userinfoRepository.findByDepartId(departId);
-            userinfoMap.put(departId,userinfos);
+            List<Userinfo> userInfos=userinfoRepository.findByDepartId(departId);
+            resultUser.add(userInfos);
         }
         result.add(departs);
-        result.add(userinfoMap);
+        result.add(resultUser);
         serverResult.setData(result);
         return serverResult;
     }
