@@ -164,6 +164,7 @@ public class UserinfoController {
         userinfo.put("departName",departName);
         userinfo.put("positionName",positionName);
         serverResult.setData(userinfo);
+        serverResult.setStatus(true);
         return serverResult;
     }
     //判断是否已经登陆
