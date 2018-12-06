@@ -55,7 +55,7 @@ public class GroupController {
     }
     //保存单条群组记录
     @RequestMapping("/saveGroup")
-    public ServerResult insertGroupRecord(HttpServletRequest request, @RequestParam ("group")List<Userinfo>group,@RequestParam("name") String name) {
+    public ServerResult insertGroupRecord(HttpServletRequest request, @RequestParam ("group") List<Userinfo> group,@RequestParam("name") String name) {
         ServerResult serverResult=new ServerResult();
         Integer userId= (Integer) request.getSession().getAttribute("userId");
         Group group1=new Group();
