@@ -29,7 +29,7 @@ import java.util.Map;
  * Created by gjw on 2018/11/19.
  */
 @RestController
-@CrossOrigin(allowCredentials = "true")
+//@CrossOrigin(allowCredentials = "true",origins = "*")
 public class UserinfoController {
     @Autowired
     private UserinfoService userinfoService;

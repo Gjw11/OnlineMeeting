@@ -22,7 +22,7 @@ import java.util.Map;
  * Created by gjw on 2018/11/24.
  */
 @RestController
-@CrossOrigin(allowCredentials = "true")
+//@CrossOrigin(allowCredentials = "true",origins = "http://39.106.56.132:8082")
 @RequestMapping("/group")
 public class GroupController {
     @Autowired
