@@ -72,15 +72,15 @@ public class GroupServiceImpl implements GroupService{
         serverResult.setStatus(true);
         return serverResult;
     }
-
+    @Transactional
     @Override
-    public ServerResult updateOneGroup(Integer groupId,List<Userinfo> group,String name) {
+    public ServerResult updateOneGroup(Integer groupId,List<Integer> userIds,String name) {
         int bol=groupRepository.update(groupId,name);
         groupRecordRepository.delete(groupId);
-        GroupRecord groupRecord=new GroupRecord();
-        groupRecord.setGroupId(groupId);
-        for (int i=0;i<group.size();i++){
-            groupRecord.setUserId(group.get(i).getId());
+        for (int i=0;i<userIds.size();i++){
+            GroupRecord groupRecord=new GroupRecord();
+            groupRecord.setGroupId(groupId);
+            groupRecord.setUserId(userIds.get(i));
             GroupRecord bol1=groupRecordRepository.saveAndFlush(groupRecord);
         }
         ServerResult serverResult=new ServerResult();

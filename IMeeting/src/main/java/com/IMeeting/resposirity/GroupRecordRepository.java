@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Repository
 public interface GroupRecordRepository extends JpaRepository<GroupRecord,Integer> {
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query(value = "delete from GroupRecord m where m.groupId=?1")
     void delete(Integer groupId);
     List<GroupRecord>findByGroupId(Integer groupId);

@@ -13,5 +13,5 @@ public interface GroupService {
     ServerResult deleteGroup(Integer id);
     Group selectGroup(Integer id);
     ServerResult showOneGroup(Integer id);
-    ServerResult updateOneGroup(Integer id,List<Userinfo> group,String name);
+    ServerResult updateOneGroup(Integer id,List<Integer> userIds,String name);
 }

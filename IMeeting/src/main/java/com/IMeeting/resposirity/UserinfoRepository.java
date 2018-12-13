@@ -23,7 +23,7 @@ public interface UserinfoRepository extends JpaRepository<Userinfo,Integer>{
     List<Userinfo> findByDepartId(Integer departId);
     Optional<Userinfo> findById(Integer id);
     @Transactional
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query(value = "update Userinfo m set m.password=?1 where m.phone=?2")
     int updatePwd(String password,String phone);
     @Transactional

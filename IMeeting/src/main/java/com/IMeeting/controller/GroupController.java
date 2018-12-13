@@ -60,7 +60,7 @@ public class GroupController {
         group1.setUserId(userId);
         Group bol=groupRepository.saveAndFlush(group1);
         Integer GroupId=group1.getId();
-        List<Integer>ids=group.getIds();
+        List<Integer>ids=group.getUserIds();
         for (int i=0;i<ids.size();i++){
             GroupRecord groupRecord=new GroupRecord();
             groupRecord.setGroupId(GroupId);
@@ -94,8 +94,8 @@ public class GroupController {
     }
     //更新单条群组记录
     @RequestMapping("/updateOneGroup")
-    public ServerResult updateOneGroup(@RequestParam("id")Integer id,@RequestParam ("group")List<Userinfo>group,@RequestParam("name") String name){
-        ServerResult serverResult=groupService.updateOneGroup(id,group,name);
+    public ServerResult updateOneGroup(@RequestBody GroupList groupList){
+        ServerResult serverResult=groupService.updateOneGroup(groupList.getGroupId(),groupList.getUserIds(),groupList.getName());
         return serverResult;
     }
 }

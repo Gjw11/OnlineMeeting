@@ -14,11 +14,11 @@ import java.util.List;
  */
 @Repository
 public interface GroupRepository  extends JpaRepository<Group,Integer> {
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query(value = "delete from Group m where m.id=?1")
     void delete(Integer id);
     List<Group> findByUserId(Integer userId);
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query(value = "update Group m set m.name =?2 where m.id=?1")
     int update(Integer id,String name);
 }
