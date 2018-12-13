@@ -3,11 +3,11 @@ package com.IMeeting.entity;
 import javax.persistence.*;
 
 /**
- * Created by gjw on 2018/11/18.
+ * Created by gjw on 2018/12/12.
  */
 @Entity
-@Table(name = "m_equip")
-public class Equip {
+@Table(name = "u_role")
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

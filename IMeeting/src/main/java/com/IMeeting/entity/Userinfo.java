@@ -1,9 +1,6 @@
 package com.IMeeting.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by gjw on 2018/11/18.
@@ -13,7 +10,7 @@ import javax.persistence.Table;
 public class Userinfo  {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String worknum;
     private String name;
@@ -22,9 +19,18 @@ public class Userinfo  {
     private String password;
     private Integer departId;
     private Integer positionId;
+    private Integer roleId;
     private Integer tenantId;
     private Integer status;
     private String resume;
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
 
     public Integer getId() {
         return id;

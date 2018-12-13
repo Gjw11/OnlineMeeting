@@ -7,10 +7,7 @@ import com.IMeeting.resposirity.GroupRepository;
 import com.IMeeting.resposirity.UserinfoRepository;
 import com.IMeeting.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -55,18 +52,19 @@ public class GroupController {
     }
     //保存单条群组记录
     @RequestMapping("/saveGroup")
-    public ServerResult insertGroupRecord(HttpServletRequest request, @RequestParam ("group") List<Userinfo> group,@RequestParam("name") String name) {
+    public ServerResult insertGroupRecord(HttpServletRequest request, @RequestBody GroupList group) {
         ServerResult serverResult=new ServerResult();
         Integer userId= (Integer) request.getSession().getAttribute("userId");
         Group group1=new Group();
-        group1.setName(name);
+        group1.setName(group.getName());
         group1.setUserId(userId);
         Group bol=groupRepository.saveAndFlush(group1);
         Integer GroupId=group1.getId();
-        GroupRecord groupRecord=new GroupRecord();
-        groupRecord.setGroupId(GroupId);
-        for (int i=0;i<group.size();i++){
-            groupRecord.setUserId(group.get(i).getId());
+        List<Integer>ids=group.getIds();
+        for (int i=0;i<ids.size();i++){
+            GroupRecord groupRecord=new GroupRecord();
+            groupRecord.setGroupId(GroupId);
+            groupRecord.setUserId(ids.get(i));
             GroupRecord bol1=groupRecordRepository.saveAndFlush(groupRecord);
         }
         serverResult.setStatus(true);

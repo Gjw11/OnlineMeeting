@@ -1,9 +1,7 @@
 package com.IMeeting.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.sql.Time;
 
 /**
  * Created by gjw on 2018/11/18.
@@ -12,10 +10,10 @@ import javax.persistence.Table;
 @Table(name = "m_meetroom_parameter")
 public class MeetroomParameter {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String beigin;
-    private String over;
+    private Time beigin;
+    private Time over;
     private String dateLimit;
     private String timeLimit;
     private String timeInterval;
@@ -29,19 +27,19 @@ public class MeetroomParameter {
         this.id = id;
     }
 
-    public String getBeigin() {
+    public Time getBeigin() {
         return beigin;
     }
 
-    public void setBeigin(String beigin) {
+    public void setBeigin(Time beigin) {
         this.beigin = beigin;
     }
 
-    public String getOver() {
+    public Time getOver() {
         return over;
     }
 
-    public void setOver(String over) {
+    public void setOver(Time over) {
         this.over = over;
     }
 

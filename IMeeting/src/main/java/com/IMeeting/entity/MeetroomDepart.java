@@ -1,9 +1,6 @@
 package com.IMeeting.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by gjw on 2018/11/18.
@@ -12,7 +9,7 @@ import javax.persistence.Table;
 @Table(name = "m_meetroom_depart")
 public class MeetroomDepart {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer meetroomId;
     private Integer departId;

@@ -1,9 +1,6 @@
 package com.IMeeting.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by gjw on 2018/11/18.
@@ -12,7 +9,7 @@ import javax.persistence.Table;
 @Table(name = "u_position")
 public class Position {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private Integer tenantId;

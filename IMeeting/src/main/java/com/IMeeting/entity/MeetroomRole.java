@@ -1,18 +1,17 @@
 package com.IMeeting.entity;
-
 import javax.persistence.*;
-
 /**
- * Created by gjw on 2018/11/18.
+ * Created by gjw on 2018/12/12.
  */
+
 @Entity
-@Table(name = "m_meetroom_equip")
-public class MeetroomEquip {
+@Table(name = "m_meetroom_role")
+public class MeetroomRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer meetroomId;
-    private Integer equipId;
+    private Integer roleId;
 
     public Integer getId() {
         return id;
@@ -30,11 +29,11 @@ public class MeetroomEquip {
         this.meetroomId = meetroomId;
     }
 
-    public Integer getEquipId() {
-        return equipId;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    public void setEquipId(Integer equipId) {
-        this.equipId = equipId;
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 }
