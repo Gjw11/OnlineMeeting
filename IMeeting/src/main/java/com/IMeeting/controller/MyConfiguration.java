@@ -3,6 +3,8 @@ package com.IMeeting.controller;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.session.web.http.CookieSerializer;
+import org.springframework.session.web.http.DefaultCookieSerializer;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -23,4 +25,14 @@ public class MyConfiguration {
         bean.setOrder(0);
         return bean;
     }
+
+    @Bean
+    public CookieSerializer httpSessionIdResolver() {
+        DefaultCookieSerializer cookieSerializer = new DefaultCookieSerializer();
+        cookieSerializer.setCookieName("SESSION");
+        cookieSerializer.setUseHttpOnlyCookie(false);
+        cookieSerializer.setSameSite(null);
+        return cookieSerializer;
+    }
+
 }
