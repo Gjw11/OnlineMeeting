@@ -57,16 +57,20 @@ public class GroupServiceImpl implements GroupService{
         List<GroupRecord>groupRecords=groupRecordRepository.findByGroupId(id);
         HashMap<Integer,String>u=new HashMap<>();
         String name = null;
+        int departId = -1;
         for (int i=0;i<groupRecords.size();i++){
             Integer userId=groupRecords.get(i).getUserId();
             Userinfo userinfo=userinfoService.getUserinfo(userId);
             if (userinfo!=null) {
                 name = userinfo.getName();
+                departId=userinfo.getDepartId();
+                groupRecords.get(i).setGroupId(departId);
             }
            u.put(userId,name);
         }
         List<Object>list=new ArrayList<>();
         list.add(group);
+        list.add(groupRecords);
         list.add(u);
         serverResult.setData(list);
         serverResult.setStatus(true);
