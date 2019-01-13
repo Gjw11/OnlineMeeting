@@ -85,7 +85,7 @@ public class GroupServiceImpl implements GroupService{
             GroupRecord groupRecord=new GroupRecord();
             groupRecord.setGroupId(groupId);
             groupRecord.setUserId(userIds.get(i));
-            GroupRecord bol1=groupRecordRepository.saveAndFlush(groupRecord);
+            groupRecordRepository.saveAndFlush(groupRecord);
         }
         ServerResult serverResult=new ServerResult();
         serverResult.setStatus(true);
