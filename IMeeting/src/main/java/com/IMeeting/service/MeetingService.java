@@ -2,6 +2,7 @@ package com.IMeeting.service;
 
 
 import com.IMeeting.entity.*;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
@@ -16,7 +17,8 @@ public interface MeetingService {
     List<Equip> selectEquips(Integer tenantId);
     List<MeetroomEquip>selectOneMeetroomEquip(Integer meetroomId);
     ServerResult toReserveIndex(HttpServletRequest request);
-//    List<Meeting>selectBydate(Date date,Integer meetroomId);
     ServerResult getOneRoomReserver(String reserverDate,Integer roomId);
     ServerResult getOneDayReserve(OneDayReservation oneDayReservation);
+    ServerResult reserveMeeting(@RequestBody ReserveParameter reserveParameter,HttpServletRequest request);
+
 }

@@ -35,20 +35,7 @@ public class GroupController {
     //显示用户
     @RequestMapping("/showUser")
     public ServerResult showUserinfo(HttpServletRequest request) {
-        ServerResult serverResult=new ServerResult();
-        Integer tenantId= (Integer) request.getSession().getAttribute("tenantId");
-        List<Depart>departs=departRepository.findByTenantId(tenantId);
-        List<Object>result=new ArrayList<>();
-        List<Object>resultUser=new ArrayList<>();
-        for(int i=0;i<departs.size();i++){
-            Integer departId=departs.get(i).getId();
-            List<Userinfo> userInfos=userinfoRepository.findByDepartId(departId);
-            resultUser.add(userInfos);
-        }
-        result.add(departs);
-        result.add(resultUser);
-        serverResult.setData(result);
-        serverResult.setStatus(true);
+        ServerResult serverResult=groupService.showUser(request);
         return serverResult;
     }
     //保存单条群组记录

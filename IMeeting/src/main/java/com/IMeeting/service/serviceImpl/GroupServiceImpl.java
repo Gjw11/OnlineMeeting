@@ -1,9 +1,7 @@
 package com.IMeeting.service.serviceImpl;
 
-import com.IMeeting.entity.Group;
-import com.IMeeting.entity.GroupRecord;
-import com.IMeeting.entity.ServerResult;
-import com.IMeeting.entity.Userinfo;
+import com.IMeeting.entity.*;
+import com.IMeeting.resposirity.DepartRepository;
 import com.IMeeting.resposirity.GroupRecordRepository;
 import com.IMeeting.resposirity.GroupRepository;
 import com.IMeeting.resposirity.UserinfoRepository;
@@ -13,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +30,8 @@ public class GroupServiceImpl implements GroupService{
     private UserinfoRepository userinfoRepository;
     @Autowired
     private UserinfoService userinfoService;
+    @Autowired
+    private DepartRepository departRepository;
     @Override
     @Transactional
     public ServerResult deleteGroup(Integer id) {
@@ -88,6 +89,34 @@ public class GroupServiceImpl implements GroupService{
             GroupRecord bol1=groupRecordRepository.saveAndFlush(groupRecord);
         }
         ServerResult serverResult=new ServerResult();
+        serverResult.setStatus(true);
+        return serverResult;
+    }
+    //获取该用户所有的群组
+    @Override
+    public ServerResult getGroupList(Integer userId) {
+        List<Group> groups=groupRepository.findByUserId(userId);
+        ServerResult serverResult=new ServerResult();
+        serverResult.setData(groups);
+        serverResult.setStatus(true);
+        return serverResult;
+    }
+    //显示该租户下的所有人员
+    @Override
+    public ServerResult showUser(HttpServletRequest request) {
+        ServerResult serverResult=new ServerResult();
+        Integer tenantId= (Integer) request.getSession().getAttribute("tenantId");
+        List<Depart>departs=departRepository.findByTenantId(tenantId);
+        List<Object>result=new ArrayList<>();
+        List<Object>resultUser=new ArrayList<>();
+        for(int i=0;i<departs.size();i++){
+            Integer departId=departs.get(i).getId();
+            List<Userinfo> userInfos=userinfoRepository.findByDepartId(departId);
+            resultUser.add(userInfos);
+        }
+        result.add(departs);
+        result.add(resultUser);
+        serverResult.setData(result);
         serverResult.setStatus(true);
         return serverResult;
     }

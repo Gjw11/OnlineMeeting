@@ -18,6 +18,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
+import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,11 +42,15 @@ public class MeetingServiceImpl implements MeetingService {
     @Autowired
     private EquipRepositpry equipRepositpry;
     @Autowired
+    private GroupRepository groupRepository;
+    @Autowired
     private MeetroomEquipRepository meetroomEquipRepository;
     @Autowired
     private MeetingRepository meetingRepository;
     @Autowired
     private UserinfoService userinfoService;
+    @Autowired
+    private JoinPersonRepository joinPersonRepository;
     @Override
     public MeetroomParameter selectParameter(Integer tenantId) {
         MeetroomParameter meetroomParameter = meetroomParameterRepository.findByTenantId(tenantId);
@@ -147,9 +153,10 @@ public class MeetingServiceImpl implements MeetingService {
         for (int j=0;j<meetings.size();j++){
             ReserverRecord reserverRecord=new ReserverRecord();
             Meeting meeting=meetings.get(j);
-            reserverRecord.setBegin(meeting.getBegin());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            reserverRecord.setBegin(sdf.format(new Date(meeting.getBegin())));
             reserverRecord.setCreateTime(meeting.getCreateTime());
-            reserverRecord.setOver(meeting.getOver());
+            reserverRecord.setOver(sdf.format(new Date(meeting.getOver())));
             reserverRecord.setMeetDate(meeting.getMeetDate());
             reserverRecord.setTopic(meeting.getTopic());
             Userinfo userinfo=userinfoService.getUserinfo(meeting.getUserId());
@@ -179,6 +186,41 @@ public class MeetingServiceImpl implements MeetingService {
         serverResult.setStatus(true);
         return serverResult;
     }
+    //传入参数为会议主题、会议内容、会议室id、会议室日期、开始时间、持续时间、准备时间、参会人员(不包括发起人自己)
+    @Override
+    public ServerResult reserveMeeting(@RequestBody ReserveParameter reserveParameter,HttpServletRequest request) {
+        Meeting meeting=new Meeting();
+        meeting.setMeetDate(reserveParameter.getReserveDate());
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        long begin= 0;
+        try {
+            begin = (sdf.parse(reserveParameter.getReserveDate()+" "+reserveParameter.getBeginTime())).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        meeting.setBegin(begin);
+        meeting.setContent(reserveParameter.getContent());
+        meeting.setMeetroomId(reserveParameter.getMeetRoomId());
+        meeting.setOver(begin+reserveParameter.getLastTime()*60*1000);
+        meeting.setStatus(1);
+        meeting.setUserId((Integer) request.getSession().getAttribute("userId"));
+        meeting.setMeetDate(reserveParameter.getReserveDate());
+        meeting.setPrepareTime(reserveParameter.getPrepareTime());
+        meeting.setCreateTime(sdf.format(new java.util.Date()));
+        meetingRepository.saveAndFlush(meeting);
+        Integer meetringId=meeting.getId();
+        List<Integer> list=reserveParameter.getJoinPeopleId();
+        for (int i=0;i<list.size();i++){
+            JoinPerson joinPerson=new JoinPerson();
+            joinPerson.setMeetingId(meetringId);
+            joinPerson.setUserId(list.get(i));
+            joinPersonRepository.saveAndFlush(joinPerson);
+        }
+        ServerResult serverResult=new ServerResult();
+        serverResult.setStatus(true);
+        return serverResult;
+    }
+
 
 //    @Override
 //    public List<Meeting> selectBydate(Date date, Integer meetroomId) {

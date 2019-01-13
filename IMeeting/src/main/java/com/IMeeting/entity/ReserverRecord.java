@@ -7,8 +7,8 @@ import java.sql.Time;
  */
 public class ReserverRecord {
     Integer id;
-    private Time begin;
-    private Time over;
+    private String begin;
+    private String over;
     private String topic;
     private String content;
     private String meetDate;
@@ -34,19 +34,19 @@ public class ReserverRecord {
         this.id = id;
     }
 
-    public Time getBegin() {
+    public String getBegin() {
         return begin;
     }
 
-    public void setBegin(Time begin) {
+    public void setBegin(String begin) {
         this.begin = begin;
     }
 
-    public Time getOver() {
+    public String getOver() {
         return over;
     }
 
-    public void setOver(Time over) {
+    public void setOver(String over) {
         this.over = over;
     }
 

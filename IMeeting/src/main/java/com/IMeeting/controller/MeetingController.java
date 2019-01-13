@@ -3,6 +3,7 @@ package com.IMeeting.controller;
 import com.IMeeting.entity.*;
 import com.IMeeting.resposirity.MeetingRepository;
 import com.IMeeting.resposirity.UserinfoRepository;
+import com.IMeeting.service.GroupService;
 import com.IMeeting.service.MeetingService;
 import com.IMeeting.service.UserinfoService;
 import org.omg.CORBA.INTERNAL;
@@ -24,6 +25,8 @@ import java.util.*;
 public class MeetingController {
     @Autowired
     private MeetingService meetingService;
+    @Autowired
+    private GroupService groupService;
     //预定会议首页
     @RequestMapping("/reserveIndex")
     public ServerResult reserveIndex(HttpServletRequest request){
@@ -40,6 +43,31 @@ public class MeetingController {
     @RequestMapping("/oneDayReserver")
     public ServerResult oneDayReserver(@RequestBody OneDayReservation oneDayReservation){
         ServerResult serverResult=meetingService.getOneDayReserve(oneDayReservation);
+        return serverResult;
+    }
+    //在预定的时候获取该用户拥有的群组列表
+    @RequestMapping("/getGroupList")
+    public ServerResult getGroupList(HttpServletRequest request){
+        Integer userId= (Integer) request.getSession().getAttribute("userId");
+        ServerResult serverResult=groupService.getGroupList(userId);
+        return serverResult;
+    }
+    //在预定的时候选择某个群组，将该群组的所有成员显示出来
+    @RequestMapping("/showOneGroup")
+    public ServerResult showOneGroup(Integer groupId){
+        ServerResult serverResult=groupService.showOneGroup(groupId);
+        return serverResult;
+    }
+    //除了群组人员以外选择其他人员
+    @RequestMapping("/selectPeople")
+    public ServerResult selectPeople(HttpServletRequest request){
+        ServerResult serverResult=groupService.showUser(request);
+        return serverResult;
+    }
+    //预定会议
+    @RequestMapping("/reserveMeeting")
+    public ServerResult reserveMeeting(@RequestBody ReserveParameter reserveParameter, HttpServletRequest request){
+        ServerResult serverResult=meetingService.reserveMeeting(reserveParameter,request);
         return serverResult;
     }
 }

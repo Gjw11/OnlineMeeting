@@ -15,8 +15,8 @@ public class Meeting {
     private Integer id;
     private String topic;
     private String content;
-    private Time begin;
-    private Time over;
+    private long begin;
+    private long over;
     private Integer userId;
     private Integer meetroomId;
     private Integer status;
@@ -65,19 +65,19 @@ public class Meeting {
         this.content = content;
     }
 
-    public Time getBegin() {
+    public long getBegin() {
         return begin;
     }
 
-    public void setBegin(Time begin) {
+    public void setBegin(long begin) {
         this.begin = begin;
     }
 
-    public Time getOver() {
+    public long getOver() {
         return over;
     }
 
-    public void setOver(Time over) {
+    public void setOver(long over) {
         this.over = over;
     }
 

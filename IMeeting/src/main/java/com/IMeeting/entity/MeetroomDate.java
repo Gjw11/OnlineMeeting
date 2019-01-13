@@ -10,8 +10,7 @@ import java.util.List;
  */
 public class MeetroomDate {
     List<Integer>MeetroomIds;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
-    Date MeetroomDate;
+    String MeetroomDate;
 
     public List<Integer> getMeetroomIds() {
         return MeetroomIds;
@@ -21,11 +20,11 @@ public class MeetroomDate {
         MeetroomIds = meetroomIds;
     }
 
-    public Date getMeetroomDate() {
+    public String getMeetroomDate() {
         return MeetroomDate;
     }
 
-    public void setMeetroomDate(Date meetroomDate) {
+    public void setMeetroomDate(String meetroomDate) {
         MeetroomDate = meetroomDate;
     }
 }
