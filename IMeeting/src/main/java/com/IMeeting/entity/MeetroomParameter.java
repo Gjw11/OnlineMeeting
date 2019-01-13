@@ -12,7 +12,7 @@ public class MeetroomParameter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Time beigin;
+    private Time begin;
     private Time over;
     private String dateLimit;
     private String timeLimit;
@@ -27,12 +27,12 @@ public class MeetroomParameter {
         this.id = id;
     }
 
-    public Time getBeigin() {
-        return beigin;
+    public Time getBegin() {
+        return begin;
     }
 
-    public void setBeigin(Time beigin) {
-        this.beigin = beigin;
+    public void setBegin(Time begin) {
+        this.begin = begin;
     }
 
     public Time getOver() {
