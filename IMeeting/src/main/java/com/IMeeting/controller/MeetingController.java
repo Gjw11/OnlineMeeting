@@ -70,4 +70,10 @@ public class MeetingController {
         ServerResult serverResult=meetingService.reserveMeeting(reserveParameter,request);
         return serverResult;
     }
+    //抢会议
+    @RequestMapping("/robMeeting")
+    public ServerResult robMeeting(@RequestBody ReserveParameter reserveParameter, HttpServletRequest request){
+        ServerResult serverResult=meetingService.robMeeting(reserveParameter,request);
+        return serverResult;
+    }
 }

@@ -155,7 +155,7 @@ public class MeetingServiceImpl implements MeetingService {
             Meeting meeting=meetings.get(j);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             reserverRecord.setBegin(sdf.format(new Date(meeting.getBegin())));
-            reserverRecord.setCreateTime(meeting.getCreateTime());
+            reserverRecord.setCreateTime(sdf.format(meeting.getCreateTime()));
             reserverRecord.setOver(sdf.format(new Date(meeting.getOver())));
             reserverRecord.setMeetDate(meeting.getMeetDate());
             reserverRecord.setTopic(meeting.getTopic());
@@ -206,7 +206,49 @@ public class MeetingServiceImpl implements MeetingService {
         meeting.setUserId((Integer) request.getSession().getAttribute("userId"));
         meeting.setMeetDate(reserveParameter.getReserveDate());
         meeting.setPrepareTime(reserveParameter.getPrepareTime());
-        meeting.setCreateTime(sdf.format(new java.util.Date()));
+        try {
+            meeting.setCreateTime(sdf.parse(String.valueOf(new java.util.Date())).getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        meetingRepository.saveAndFlush(meeting);
+        Integer meetringId=meeting.getId();
+        List<Integer> list=reserveParameter.getJoinPeopleId();
+        for (int i=0;i<list.size();i++){
+            JoinPerson joinPerson=new JoinPerson();
+            joinPerson.setMeetingId(meetringId);
+            joinPerson.setUserId(list.get(i));
+            joinPersonRepository.saveAndFlush(joinPerson);
+        }
+        ServerResult serverResult=new ServerResult();
+        serverResult.setStatus(true);
+        return serverResult;
+    }
+    //传入参数和预定会议一样
+    @Override
+    public ServerResult robMeeting(@RequestBody ReserveParameter reserveParameter, HttpServletRequest request) {
+        Meeting meeting=new Meeting();
+        meeting.setMeetDate(reserveParameter.getReserveDate());
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        long begin= 0;
+        try {
+            begin = (sdf.parse(reserveParameter.getReserveDate()+" "+reserveParameter.getBeginTime())).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        meeting.setBegin(begin);
+        meeting.setContent(reserveParameter.getContent());
+        meeting.setMeetroomId(reserveParameter.getMeetRoomId());
+        meeting.setOver(begin+reserveParameter.getLastTime()*60*1000);
+        meeting.setStatus(2);
+        meeting.setUserId((Integer) request.getSession().getAttribute("userId"));
+        meeting.setMeetDate(reserveParameter.getReserveDate());
+        meeting.setPrepareTime(reserveParameter.getPrepareTime());
+        try {
+            meeting.setCreateTime(sdf.parse(String.valueOf(new java.util.Date())).getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         meetingRepository.saveAndFlush(meeting);
         Integer meetringId=meeting.getId();
         List<Integer> list=reserveParameter.getJoinPeopleId();

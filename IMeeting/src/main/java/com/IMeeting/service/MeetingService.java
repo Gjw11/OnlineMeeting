@@ -20,5 +20,5 @@ public interface MeetingService {
     ServerResult getOneRoomReserver(String reserverDate,Integer roomId);
     ServerResult getOneDayReserve(OneDayReservation oneDayReservation);
     ServerResult reserveMeeting(@RequestBody ReserveParameter reserveParameter,HttpServletRequest request);
-
+    ServerResult robMeeting(@RequestBody ReserveParameter reserveParameter,HttpServletRequest request);
 }

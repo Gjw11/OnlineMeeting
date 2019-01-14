@@ -23,13 +23,14 @@ public class Meeting {
     private Integer tenantId;
     private String meetDate;
     private int prepareTime;
-    private String createTime;
+    private long createTime;
 
-    public String getCreateTime() {
+
+    public long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(long createTime) {
         this.createTime = createTime;
     }
 
