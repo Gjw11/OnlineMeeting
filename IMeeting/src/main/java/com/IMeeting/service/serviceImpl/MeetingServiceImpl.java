@@ -190,7 +190,7 @@ public class MeetingServiceImpl implements MeetingService {
         serverResult.setStatus(true);
         return serverResult;
     }
-    //传入参数为会议主题、会议内容、会议室id、会议室日期、开始时间、持续时间、准备时间、参会人员(不包括发起人自己)
+    //传入参数为会议主题、会议内容、会议室id、会议室日期、开始时间、持续时间、准备时间、参会人员(不包括发起人自己)、外来人员（集合形式）名字、电话（可省略）
     @Override
     public ServerResult reserveMeeting(ReserveParameter reserveParameter,HttpServletRequest request) {
         Meeting meeting=new Meeting();
