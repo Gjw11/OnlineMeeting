@@ -1,12 +1,11 @@
 package com.IMeeting.entity;
 
-import java.sql.Time;
 import java.util.List;
 
 /**
- * Created by gjw on 2019/1/13.
+ * Created by gjw on 2019/1/14.
  */
-public class ReserveParameter {
+public class CoordinateParameter {
     private String topic;
     private String content;
     private Integer meetRoomId;
@@ -14,8 +13,11 @@ public class ReserveParameter {
     private String beginTime;
     private int lastTime;
     private int prepareTime;
-    private List<Integer>joinPeopleId;
+    private List<Integer> joinPeopleId;
+    private String note;
+    private Integer beforeMeetingId;
     private List<OutsideJoinPerson>outsideJoinPersons;
+
 
     public List<OutsideJoinPerson> getOutsideJoinPersons() {
         return outsideJoinPersons;
@@ -23,6 +25,14 @@ public class ReserveParameter {
 
     public void setOutsideJoinPersons(List<OutsideJoinPerson> outsideJoinPersons) {
         this.outsideJoinPersons = outsideJoinPersons;
+    }
+
+    public Integer getBeforeMeetingId() {
+        return beforeMeetingId;
+    }
+
+    public void setBeforeMeetingId(Integer beforeMeetingId) {
+        this.beforeMeetingId = beforeMeetingId;
     }
 
     public String getTopic() {
@@ -87,5 +97,13 @@ public class ReserveParameter {
 
     public void setJoinPeopleId(List<Integer> joinPeopleId) {
         this.joinPeopleId = joinPeopleId;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

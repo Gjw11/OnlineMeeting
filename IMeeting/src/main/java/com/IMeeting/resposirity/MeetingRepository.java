@@ -6,7 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -18,4 +21,8 @@ import java.util.List;
 public interface MeetingRepository extends JpaRepository<Meeting,Integer>{
     List<Meeting> findAll(Specification<Meeting> specification);
     List<Meeting> findByMeetroomIdAndMeetDateAndStatus(Integer meetRoomId, String meetDate,Integer status);
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query(value = "update Meeting m set m.status=?2 where m.id=?1")
+    int updateStatus(Integer meetingId,Integer status);
 }

@@ -3,6 +3,7 @@ package com.IMeeting.service;
 
 import com.IMeeting.entity.*;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
@@ -19,6 +20,8 @@ public interface MeetingService {
     ServerResult toReserveIndex(HttpServletRequest request);
     ServerResult getOneRoomReserver(String reserverDate,Integer roomId);
     ServerResult getOneDayReserve(OneDayReservation oneDayReservation);
-    ServerResult reserveMeeting(@RequestBody ReserveParameter reserveParameter,HttpServletRequest request);
-    ServerResult robMeeting(@RequestBody ReserveParameter reserveParameter,HttpServletRequest request);
+    ServerResult reserveMeeting(ReserveParameter reserveParameter,HttpServletRequest request);
+    ServerResult robMeeting(ReserveParameter reserveParameter,HttpServletRequest request);
+    ServerResult coordinateMeeting(CoordinateParameter coordinateParameter,HttpServletRequest request);
+    ServerResult cancelMeeting(Integer meentingId);
 }

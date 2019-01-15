@@ -76,4 +76,11 @@ public class MeetingController {
         ServerResult serverResult=meetingService.robMeeting(reserveParameter,request);
         return serverResult;
     }
+    //调用会议
+    @RequestMapping("/coordinateMeeting")
+    public ServerResult coordinateMeeting(@RequestBody CoordinateParameter coordinateParameter, HttpServletRequest request){
+        ServerResult serverResult=meetingService.coordinateMeeting(coordinateParameter,request);
+        return serverResult;
+    }
+    
 }
