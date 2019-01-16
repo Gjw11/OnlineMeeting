@@ -25,5 +25,5 @@ public interface MeetingService {
     ServerResult coordinateMeeting(CoordinateParameter coordinateParameter,HttpServletRequest request);
     ServerResult cancelMeeting(Integer meentingId);
     Meeting findByMeetingId(Integer meetingId);
-    ServerResult showReserveMeeting();
+    ServerResult showReserveMeeting(HttpServletRequest request);
 }

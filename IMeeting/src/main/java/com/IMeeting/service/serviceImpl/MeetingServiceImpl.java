@@ -187,11 +187,10 @@ public class MeetingServiceImpl implements MeetingService {
         serverResult.setStatus(true);
         return serverResult;
     }
-    //传入参数为会议主题、会议内容、会议室id、会议室日期、开始时间、持续时间、准备时间、参会人员(不包括发起人自己)、外来人员（集合形式）名字、电话（可省略）
+    //传入参数为会议主题、会议内容、会议室id、会议室日期、开始时间、持续时间、准备时间、参会人员(不包括发起人自己)、外来人员（集合形式）名字、电话（可省略)
     @Override
     public ServerResult reserveMeeting(ReserveParameter reserveParameter,HttpServletRequest request) {
-        Meeting meeting=new Meeting();
-        meeting.setMeetDate(reserveParameter.getReserveDate());
+        ServerResult serverResult = new ServerResult();
         SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         long begin= 0;
         try {
@@ -199,41 +198,46 @@ public class MeetingServiceImpl implements MeetingService {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        meeting.setBegin(begin);
-        meeting.setContent(reserveParameter.getContent());
-        meeting.setMeetroomId(reserveParameter.getMeetRoomId());
-        meeting.setOver(begin+reserveParameter.getLastTime()*60*1000);
-        meeting.setStatus(1);
-        meeting.setUserId((Integer) request.getSession().getAttribute("userId"));
-        meeting.setMeetDate(reserveParameter.getReserveDate());
-        meeting.setPrepareTime(reserveParameter.getPrepareTime());
-        try {
-            meeting.setCreateTime(sdf.parse(String.valueOf(new java.util.Date())).getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        meetingRepository.saveAndFlush(meeting);
-        Integer meetringId=meeting.getId();
-        List<Integer> list=reserveParameter.getJoinPeopleId();
-        for (int i=0;i<list.size();i++){
-            JoinPerson joinPerson=new JoinPerson();
-            joinPerson.setMeetingId(meetringId);
-            joinPerson.setUserId(list.get(i));
-            joinPersonRepository.saveAndFlush(joinPerson);
-        }
-        List<OutsideJoinPerson> outsideJoinPersons=reserveParameter.getOutsideJoinPersons();
-        for (int i=0;i<outsideJoinPersons.size();i++){
-            OutsideJoinPerson outsideJoinPerson=new OutsideJoinPerson();
-            outsideJoinPerson.setName(outsideJoinPerson.getName());
-            outsideJoinPerson.setPhone(outsideJoinPerson.getPhone());
-            outsideJoinPersonRepository.saveAndFlush(outsideJoinPerson);
-
-        }
-        ServerResult serverResult=new ServerResult();
-        serverResult.setStatus(true);
+        long over=begin+reserveParameter.getLastTime()*60*1000;
+        List<Meeting>meetings=meetingRepository.findIntersectMeeting(begin,over);
+        if (meetings.size()==0) {
+            Meeting meeting = new Meeting();
+            meeting.setMeetDate(reserveParameter.getReserveDate());
+            meeting.setBegin(begin);
+            meeting.setContent(reserveParameter.getContent());
+            meeting.setMeetroomId(reserveParameter.getMeetRoomId());
+            meeting.setOver(over);
+            meeting.setStatus(1);
+            meeting.setUserId((Integer) request.getSession().getAttribute("userId"));
+            meeting.setMeetDate(reserveParameter.getReserveDate());
+            meeting.setPrepareTime(reserveParameter.getPrepareTime());
+            try {
+                meeting.setCreateTime(sdf.parse(String.valueOf(new java.util.Date())).getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            meetingRepository.saveAndFlush(meeting);
+            Integer meetringId = meeting.getId();
+            List<Integer> list = reserveParameter.getJoinPeopleId();
+            for (int i = 0; i < list.size(); i++) {
+                JoinPerson joinPerson = new JoinPerson();
+                joinPerson.setMeetingId(meetringId);
+                joinPerson.setUserId(list.get(i));
+                joinPersonRepository.saveAndFlush(joinPerson);
+            }
+            List<OutsideJoinPerson> outsideJoinPersons = reserveParameter.getOutsideJoinPersons();
+            for (int i = 0; i < outsideJoinPersons.size(); i++) {
+                OutsideJoinPerson outsideJoinPerson = new OutsideJoinPerson();
+                outsideJoinPerson.setName(outsideJoinPerson.getName());
+                outsideJoinPerson.setPhone(outsideJoinPerson.getPhone());
+                outsideJoinPersonRepository.saveAndFlush(outsideJoinPerson);
+            }
+            serverResult.setStatus(true);
+        }else
+            serverResult.setStatus(false);
         return serverResult;
     }
-    //传入参数和预定会议一样
+    //传入参数和预定会议一样,时间、会议室无法选择，只能是那一段
     @Override
     public ServerResult robMeeting(ReserveParameter reserveParameter, HttpServletRequest request) {
         Meeting meeting=new Meeting();
@@ -355,7 +359,8 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
-    public ServerResult showReserveMeeting() {
+    public ServerResult showReserveMeeting(HttpServletRequest request) {
+        Integer userId= (Integer) request.getSession().getAttribute("userId");
         return null;
     }
 
