@@ -82,5 +82,11 @@ public class MeetingController {
         ServerResult serverResult=meetingService.coordinateMeeting(coordinateParameter,request);
         return serverResult;
     }
+    //取消会议
+    @RequestMapping("/cancelMeeting")
+    public ServerResult coordinateMeeting(@RequestParam("meetingId")Integer meetingId){
+        ServerResult serverResult=meetingService.cancelMeeting(meetingId);
+        return serverResult;
+    }
     
 }

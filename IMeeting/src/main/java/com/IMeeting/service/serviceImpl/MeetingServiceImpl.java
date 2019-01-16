@@ -21,10 +21,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by gjw on 2018/12/12.
@@ -298,7 +295,7 @@ public class MeetingServiceImpl implements MeetingService {
         meeting.setContent(coordinateParameter.getContent());
         meeting.setMeetroomId(coordinateParameter.getMeetRoomId());
         meeting.setOver(begin+coordinateParameter.getLastTime()*60*1000);
-        meeting.setStatus(2);
+        meeting.setStatus(5);
         meeting.setUserId((Integer) request.getSession().getAttribute("userId"));
         meeting.setMeetDate(coordinateParameter.getReserveDate());
         meeting.setPrepareTime(coordinateParameter.getPrepareTime());
@@ -328,7 +325,21 @@ public class MeetingServiceImpl implements MeetingService {
             outsideJoinPerson.setName(outsideJoinPerson.getName());
             outsideJoinPerson.setPhone(outsideJoinPerson.getPhone());
             outsideJoinPersonRepository.saveAndFlush(outsideJoinPerson);
-
+        }
+        ServerResult serverResult=new ServerResult();
+        serverResult.setStatus(true);
+        return serverResult;
+    }
+    //传入参数要取消的会议id
+    @Override
+    public ServerResult cancelMeeting(Integer meentingId) {
+        meetingRepository.updateStatus(meentingId,5);
+        List<CoordinateInfo> coordinateInfos=coordinateInfoRepository.findByBeforeMeetingIdAndStatus(meentingId,1);
+        if (coordinateInfos.size()==0){
+            Meeting meeting=findByMeetingId(meentingId);
+            List<Meeting> meetings=meetingRepository.findByBeginAndOverAndMeetroomIdOrderByCreateTimeAsc(meeting.getBegin(),meeting.getOver(),meeting.getMeetroomId());
+            Meeting meeting1=meetings.get(0);
+            meetingRepository.updateStatus(meeting1.getId(),1);
         }
         ServerResult serverResult=new ServerResult();
         serverResult.setStatus(true);
@@ -336,12 +347,17 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
-    public ServerResult cancelMeeting(Integer meentingId) {
-        meetingRepository.updateStatus(meentingId,5);
-        CoordinateInfo coordinateInfo=coordinateInfoRepository.findByBeforeMeetingId(meentingId);
+    public Meeting findByMeetingId(Integer meetingId) {
+        Optional<Meeting> meeting=meetingRepository.findById(meetingId);
+        if (meeting.isPresent())
+            return meeting.get();
         return null;
     }
 
+    @Override
+    public ServerResult showReserveMeeting() {
+        return null;
+    }
 
 //    @Override
 //    public List<Meeting> selectBydate(Date date, Integer meetroomId) {

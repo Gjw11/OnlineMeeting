@@ -25,4 +25,5 @@ public interface MeetingRepository extends JpaRepository<Meeting,Integer>{
     @Modifying(clearAutomatically = true)
     @Query(value = "update Meeting m set m.status=?2 where m.id=?1")
     int updateStatus(Integer meetingId,Integer status);
+    List<Meeting>findByBeginAndOverAndMeetroomIdOrderByCreateTimeAsc(long begin,long over,Integer meetroomId);
 }

@@ -13,6 +13,7 @@ public class OutsideJoinPerson {
     private Integer id;
     private String name;
     private String phone;
+    private Integer meetingId;
 
     public Integer getId() {
         return id;
@@ -20,6 +21,14 @@ public class OutsideJoinPerson {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getMeetingId() {
+        return meetingId;
+    }
+
+    public void setMeetingId(Integer meetingId) {
+        this.meetingId = meetingId;
     }
 
     public String getName() {
